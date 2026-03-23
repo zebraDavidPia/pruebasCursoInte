@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
+<h2>{% if producto %}Editar producto{% else %}Nuevo producto{% endif %}</h2>
 <form
     novalidate
-    action="{% url 'productos:formulario' %}" 
+    action="{% if producto %}{% url 'productos:editar' producto.id %}{% else %}{% url 'productos:formulario' %}{% endif %}" 
     method='POST'>
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Enviar"/>
+    <input class="btn btn-primary" type="submit" value="Guardar"/>
+    <a class="btn btn-secondary" href="{% if producto %}{% url 'productos:detalle' producto.id %}{% else %}{% url 'productos:index' %}{% endif %}">Cancelar</a>
 </form>
 {% endblock %}
